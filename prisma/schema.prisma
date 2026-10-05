@@ -12,13 +12,22 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String    @id @default(uuid(7))
-  email     String    @unique
-  name      String?
-  createdAt DateTime  @default(now())
-  deletedAt DateTime? 
+enum Role {
+  customer
+  staff
+  admin
+}
 
-  @@index([deletedAt]) 
+model User {
+  id            String    @id @default(uuid(7))
+  email         String    @unique
+  name          String?
+  createdAt     DateTime  @default(now())
+  deletedAt     DateTime?
+  emailVerified Boolean   @default(false)
+  passwordHash  String?
+  roles         Role[]    @default([customer])
+
   @@unique([email, deletedAt])
+  @@index([deletedAt])
 }
