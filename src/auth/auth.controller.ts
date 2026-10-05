@@ -5,11 +5,11 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Public, SignInService } from '@nestjs/authentication';
+import { Authenticate, Public, SignInService } from '@nestjs/authentication';
 import { SignInDto, SignUpDto } from './auth.dto.js';
 import { CredentialsService } from './credentials.service.js';
 
-@Public()
+@Authenticate({ optional: true })
 @Controller('auth')
 export class AuthController {
   constructor(
