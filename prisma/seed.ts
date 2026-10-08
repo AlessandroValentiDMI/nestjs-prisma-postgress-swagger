@@ -1,7 +1,7 @@
-import "dotenv/config";
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from '../src/generated/prisma/client.js';
+import 'dotenv/config';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient, Role } from '../src/generated/prisma/client.js';
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -10,11 +10,12 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   // Generazione di 50 record coerenti con lo schema User
-  const usersToCreate = Array.from({ length: 50 }, (_, i) => {
+  const usersToCreate = Array.from({ length: 3 }, (_, i) => {
     const index = i + 1;
     return {
       email: `user${index}@example.com`,
       name: `User ${index}`,
+      roles: [Role.admin],
     };
   });
 
@@ -42,7 +43,7 @@ main()
     await pool.end();
   })
   .catch(async (e) => {
-    console.error("❌ Errore durante il seeding:", e);
+    console.error('❌ Errore durante il seeding:', e);
     await prisma.$disconnect();
     await pool.end();
     process.exit(1);
