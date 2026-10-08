@@ -17,10 +17,14 @@ import { UpdateUserDto } from './dto/update-user.dto.js';
 import { RoleGuard } from '../guards/role.guard.js';
 
 import { User as UserModel } from '../generated/prisma/client.js';
+import { MailService } from '../mail/mail.service.js';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly mailService: MailService,
+  ) {}
 
   @Get()
   async findAll(
@@ -50,7 +54,8 @@ export class UserController {
 
   @Post()
   async create(@Body() userData: CreateUserDto): Promise<UserModel> {
-    return this.userService.createUser(userData);
+    await this.mailService.sendMail();
+    return await this.userService.createUser(userData);
   }
   @Patch(':id')
   async update(

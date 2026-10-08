@@ -1,15 +1,7 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  HttpCode,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { PasswordResetService, Public } from '@nestjs/authentication';
 import { EmailDto, ResetPasswordDto } from './auth.dto.js';
-import { PrismaService } from '../prisma/prisma.service.js';
 import { UsersRepository } from '../user/users.repository.js';
-import { Prisma, User } from '../generated/prisma/client.js';
 
 @Public()
 @Controller('auth/password')
@@ -23,8 +15,12 @@ export class PasswordResetController {
   // request() returns before it looks the address up.
   @Post('forgot')
   @HttpCode(202)
-  forgot(@Body() body: EmailDto) {
-    this.userRepository.findByEmail(body.email);
+  async forgot(@Body() body: EmailDto) {
+    try {
+      await this.userRepository.findByEmail(body.email);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // Called by the page the link opens, with the token from its URL and the new password.

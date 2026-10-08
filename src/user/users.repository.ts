@@ -1,4 +1,4 @@
-import { Injectable, type OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import type { User } from './user.js';
 import { demoUsers } from './demo-users.js';
 import { PasswordHasher } from '@nestjs/authentication';

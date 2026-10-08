@@ -5,10 +5,9 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Authenticate, Public, TokenService } from '@nestjs/authentication';
+import { Authenticate, TokenService } from '@nestjs/authentication';
 import { SignInDto } from './auth.dto.js';
 import { CredentialsService } from './credentials.service.js';
-import { Can } from '@nestjs/authorization';
 
 @Authenticate({ optional: true })
 @Controller('auth/token')

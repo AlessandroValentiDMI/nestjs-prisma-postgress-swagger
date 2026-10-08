@@ -5,7 +5,7 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Authenticate, Public, SignInService } from '@nestjs/authentication';
+import { Authenticate, SignInService } from '@nestjs/authentication';
 import { SignInDto, SignUpDto } from './auth.dto.js';
 import { CredentialsService } from './credentials.service.js';
 
