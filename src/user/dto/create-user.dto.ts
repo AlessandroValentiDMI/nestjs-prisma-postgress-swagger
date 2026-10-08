@@ -1,5 +1,4 @@
-import { IsBoolean, IsEmail, IsString, MinLength } from 'class-validator';
-import { isNil } from '@nestjs/common/internal';
+import { IsBoolean, IsEmail } from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
